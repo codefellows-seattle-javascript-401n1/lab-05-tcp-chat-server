@@ -1,0 +1,16 @@
+{
+  "name": "lab-anthony",
+  "version": "0.1.0",
+  "description": "Lab 05 TCP Chat",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "ascasson",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
+}
