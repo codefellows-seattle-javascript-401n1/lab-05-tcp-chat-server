@@ -25,12 +25,11 @@ function broadcast(data, socket, clientPool) {
 function parseCommands(data, socket, clientPool) {
   const commands = {
     '\\nick': updateNickname,
-    '\\pugbomb': pugBomb
+    '\\dogbomb\r\n': doggie
   };
 
   if (data.toString()[0] === '\\') {
     let cmd = data.toString().split(' ');
-    console.log('cmd', cmd);
     if (commands[cmd[0]]){
       return commands[cmd[0]](cmd.slice(1).join(' '), socket, clientPool);
     } else {
@@ -47,9 +46,9 @@ const updateNickname = function(newNickname, socket, clientPool){
   return clientPool;
 };
 
-const pugBomb = function(socket) {
-  //something cool here
-  return socket;
+const doggie = function(__, socket, clientPool) {
+  const dog = '\n...... //^ ^\\\\' +'\n......(/(_•_)\\)' + '\n......_/\'\'*\'\'\\_' + '\n.....(,,,)^(,,,)\n\n';
+  broadcast(dog, socket, clientPool);
 };
 
 function removeClient(socket, clientPool) {
@@ -83,7 +82,7 @@ const ClientPool = module.exports = function () {
   this.pool = {};
 
   this.on('register', (socket) => {
-    socket.write('welcome to wack!\n\n');
+    socket.write('welcome to wack!\n\ntry these commands\n\\dogbomb\n\\nick\n');
     registerClient(socket, this);
     registerClientListeners(socket, this);
   });
