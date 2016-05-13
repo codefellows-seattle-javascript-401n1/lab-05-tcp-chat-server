@@ -82,7 +82,7 @@ const ClientPool = module.exports = function () {
   this.pool = {};
 
   this.on('register', (socket) => {
-    socket.write('welcome to wack!\n\ntry these commands\n\\dogbomb\n\\nick\n');
+    socket.write('welcome to wack!\n\ntry these commands\n\\dogbomb\n\\nick [newNickname]\n');
     registerClient(socket, this);
     registerClientListeners(socket, this);
   });
