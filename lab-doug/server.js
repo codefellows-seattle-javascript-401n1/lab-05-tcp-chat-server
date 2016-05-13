@@ -2,7 +2,7 @@
 
 const net = require('net');
 const port = process.argv[2]  || 3000;
-const ClientPool = require('.lib/client-pool');
+const ClientPool = require(__dirname + '/lib/client-pool');
 const wackPool = new ClientPool();
 const server = net.createServer();
 
