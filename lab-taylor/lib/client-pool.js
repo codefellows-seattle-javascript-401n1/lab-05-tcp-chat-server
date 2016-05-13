@@ -33,7 +33,7 @@ function removeClient(socket, clientPool) {
 
 function registerClientListeners(socket, clientPool){
   socket.on('data', (data) => {
-    console.log(data.toString());
+    console.log(`${socket.wack.nicname}:: ${data.toString()}`);
     clientPool.emit('broadcast', data, socket.wack.nickname, clientPool);
   });
 
