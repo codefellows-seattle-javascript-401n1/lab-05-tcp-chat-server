@@ -1,6 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events').EventEmitter;
+const commands = require('./commands');
 
 function generateNickname() {
   const nicknameBase = ['monkey', 'slug', 'hippo', 'yeti', 'unicorn'];
@@ -23,33 +24,23 @@ function broadcast(data, socket, clientPool) {
 }
 
 function parseCommands(data, socket, clientPool) {
-  const commands = {
-    '\\nick': updateNickname,
-    '\\dogbomb\r\n': doggie
+  const commandMap = {
+    '\\nick': commands.updateNickname,
+    '\\dogbomb\r\n': commands.doggie
   };
+
+  broadcast(data, socket, clientPool);
 
   if (data.toString()[0] === '\\') {
     let cmd = data.toString().split(' ');
-    if (commands[cmd[0]]){
-      return commands[cmd[0]](cmd.slice(1).join(' '), socket, clientPool);
+    if (commandMap[cmd[0]]){
+      return commandMap[cmd[0]](cmd.slice(1).join(' '), socket, clientPool, broadcast);
     } else {
       return broadcast('command not found\n', socket, clientPool);
     }
   }
 
-  broadcast(data, socket, clientPool);
 }
-
-const updateNickname = function(newNickname, socket, clientPool){
-  clientPool.pool[socket.wack.id].wack.nickname = newNickname.trim();
-  broadcast(`${socket.wack.id} has a new nickname: ${newNickname.trim()}\n\n`, socket, clientPool);
-  return clientPool;
-};
-
-const doggie = function(__, socket, clientPool) {
-  const dog = '\n...... //^ ^\\\\' +'\n......(/(_•_)\\)' + '\n......_/\'\'*\'\'\\_' + '\n.....(,,,)^(,,,)\n\n';
-  broadcast(dog, socket, clientPool);
-};
 
 function removeClient(socket, clientPool) {
   Object.keys(clientPool.pool).forEach( (clientId) => {
