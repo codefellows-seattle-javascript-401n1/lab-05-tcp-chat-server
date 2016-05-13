@@ -15,18 +15,18 @@
 ## Directions
 * Create a TCP Server use using the net module
 * Create a ClientPool object constructor module that manages connected sockets 
- * The ClinetPool should inherit from node's EventEmitter Constructor on the _events_ module
+ * The ClientPool should inherit from node's EventEmitter Constructor on the _events_ module
  * The ClientPool should have a property named `pool` that is of type _object_, for storing references to connected sockets
 * When sockets connect to the server they should be added to an instance of ClientPool by emitting a `register` event
 * When a socket emits the `close` event the socket should be removed from the ClientPool
-* When sockets are registered with the ClientPool they should be given a randomly genorated `id` that will be usied as there key on the ClinetPool's `pool` property, 
+* When sockets are registered with the ClientPool they should be given a randomly generated `id` that will be used as their key on the ClientPool's `pool` property, 
  * **e.g.** `user_230948023948` 
-* When sockets are registered with the ClientPool they should be given a randomly genorated `nickname` that should be used to identify who typed a message in the chat
+* When sockets are registered with the ClientPool they should be given a randomly generated `nickname` that should be used to identify who typed a message in the chat
  * **e.g.** `guest-43`
 * When sockets are registered with the ClientPool they should be given event listeners for `data`, `error`, and `close` events
-* The ClinetPool should have a `broadcast` event that writes a messages to each cleint on the ClientPool's `pool` property
+* The ClientPool should have a `broadcast` event that writes a messages to each client on the ClientPool's `pool` property
 * When a socket sends a message (emits a data event) to the server, their message should be broadcast to all of the sockets in the ClientPool, by using the ClientPool's `broadcast` event that you created
-* every time a message is writen to a socket it should pint the `nickname` of the user who wrote the message 
+* Every time a message is written to a socket it should print the `nickname` of the user who wrote the message 
  * **e.g** `guest-43: whats up?`
 
 ## Bonus
