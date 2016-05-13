@@ -79,7 +79,6 @@ const ClientPool = module.exports = function () {
   });
 
   this.on('broadcast', (data, user, pool) => {
-  //  broadcast(data, user, pool);
     parseCommands(data, user, pool);
   });
 };
