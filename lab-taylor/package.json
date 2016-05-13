@@ -1,0 +1,18 @@
+{
+  "name": "lab-taylor-05",
+  "version": "0.0.1",
+  "description": "Lab Assignment for CF Sea401",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "author": "Taylor Wirtz",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^2.9.0",
+    "gulp": "^3.9.1",
+    "mocha": "^2.4.5"
+  }
+}
