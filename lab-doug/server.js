@@ -6,7 +6,9 @@ const ClientPool = require(__dirname + '/lib/client-pool');
 const wackPool = new ClientPool();
 const server = net.createServer();
 
-//net.connection event returns socket
+/*
+net.connection event returns socket with lots of data including close, err, data, socket id...)
+*/
 server.on('connection', function(socket){
   wackPool.emit('register', socket);
 });
