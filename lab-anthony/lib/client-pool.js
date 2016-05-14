@@ -5,7 +5,7 @@ const uuid = require('node-uuid');
 
 function registerClient(socket, clientpool) {
   socket.chat = {};
-  socket.chat.nick = 'guest_'+ Math.floor(Math.random() * (1000 - 1)) + 1;
+  socket.chat.nick = 'guest_'+ Math.floor(Math.random() * (100 - 1)) + 1;
   socket.chat.id = 'user_' + uuid.v4();
   clientpool.pool[socket.chat.id] = socket;
 }
@@ -37,7 +37,7 @@ const ClientPool = module.exports = function() {
   this.pool = {};
 
   this.on('register', (socket) => {
-    socket.write('Welcome new client!\n');
+    socket.write('Welcome to the chat room!\n');
     registerClient(socket, this);
     registerClientListeners(socket, this);
   });
