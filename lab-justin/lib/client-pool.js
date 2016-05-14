@@ -1,17 +1,18 @@
 'use strict';
 
 const EventEmitter = require('events').EventEmitter;
+var uuid = require('node-uuid');
 
 function registerClient(socket, clientPool) {
   socket.wack = {};
   socket.wack.id = 'client_' + Date.now();
-
   clientPool.pool[socket.wack.id] = socket;
 
 }
 
 //register e listeners to teh new sockets?
 function registerClientListeners(socket, clientPool){
+//data event triggered whenever the socket sends data and the socket(client) closes the conexion
   socket.on('data', function(data){
     console.log(data.toString().toUpperCase());
     clientPool.emit('broadcast', data);
@@ -39,9 +40,10 @@ const ClientPool = module.exports = function(){
     registerClientListeners(socket, this);
 //When sockets are registered with the ClientPool they should be given a randomly generated id that will be used as their key on the ClientPool's pool property
     socket.wack = {};
-    socket.wack.id = 'user_' + Date.now();
-    socket.wack.nickName = 'guest-' + Date.now();
-    socket.write(socket.wack.nickName + '; ' + socket.wack.id + ':  ');
+    // socket.wack.id = 'user_' + Date.now();
+    // socket.wack.nickName = 'guest-' + Date.now();
+    socket.wack.nickName = 'guest-' + uuid.v4();
+    socket.write(socket.wack.nickName + ':  ');
 
   });
 
