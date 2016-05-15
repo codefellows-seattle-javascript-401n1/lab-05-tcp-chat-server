@@ -1,0 +1,25 @@
+{
+  "name": "lab-05-tcp-chat-server",
+  "version": "0.1.0",
+  "description": "wack-chat initial setup",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewpeterwatson/lab-05-tcp-chat-server.git"
+  },
+  "author": "andrewpeterewatson@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewpeterwatson/lab-05-tcp-chat-server/issues"
+  },
+  "homepage": "https://github.com/andrewpeterwatson/lab-05-tcp-chat-server#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^2.10.1",
+    "gulp-mocha": "^2.2.0"
+  }
+}
