@@ -20,7 +20,8 @@ function registerClientListeners(socket, clientPool){
   });
 //if socket closes conexion data Event triggered
   socket.on('close', function(){
-    console.log('a client has disconnected');
+    delete clientPool.pool[socket.wack.nickName];
+    console.log(socket.wack.nickName, ' client has disconnected');
 
   });
 
@@ -30,10 +31,12 @@ function registerClientListeners(socket, clientPool){
 
   });
 }
+
 // inherits from EE, -> property pool for registration
 const ClientPool = module.exports = function(){
   EventEmitter.call(this);
   this.pool = {};
+
   this.on('register', (socket) =>{
     socket.write('Hello PEEPS! \n');
     registerClient(socket, this);
@@ -41,9 +44,9 @@ const ClientPool = module.exports = function(){
 //When sockets are registered with the ClientPool they should be given a randomly generated id that will be used as their key on the ClientPool's pool property
     socket.wack = {};
     // socket.wack.id = 'user_' + Date.now();
-    // socket.wack.nickName = 'guest-' + Date.now();
     socket.wack.nickName = 'guest-' + uuid.v4();
-    socket.write(socket.wack.nickName + ':  ');
+    socket.write(socket.wack.nickName + ': ');
+
 
   });
 
@@ -53,6 +56,8 @@ const ClientPool = module.exports = function(){
 
     });
   });
+
+
 //When a socket emits the close event the socket should be removed from the ClientPool
   this.on('close', (socket) =>{
     socket.delete();
