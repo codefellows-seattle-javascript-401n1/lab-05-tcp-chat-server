@@ -5,14 +5,15 @@ const EventEmitter = require('events').EventEmitter;
 
 function registerClient(socket, clientPool){
   socket.wack = {};
-  socket.wack.id = 'client_', uuid.v1();
+  socket.wack.id = 'client_' + uuid.v1();
+  socket.wack.nick = 'guest_' + Math.floor(Math.random() * (100 - 1)) + 1;
   clientPool.pool[socket.wack.id] = socket;
 }
 
 function registerClientListeners(socket, clientPool){
   socket.on('data', function(data){
-    console.log(data.toString());
-    clientPool.emit('broadcast', data);
+    console.log(socket.wack.id, ': ', data.toString());
+    clientPool.emit('broadcast', socket.wack.nick + ': ' + data);
   });
 
   socket.on('close', function() {
