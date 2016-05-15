@@ -21,7 +21,8 @@ function registerClientListener(socket, clientPool){
     console.log(data.toString());
     clientPool.emit('broadcast', data, socket);
   });
-  socket.on('close', function(){
+  socket.on('close', function(socket){
+    delete clientPool.pool[socket.chat.id];
     console.log('client disconnected');
   });
   socket.on('error', function(err){
