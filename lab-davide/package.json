@@ -1,0 +1,24 @@
+{
+  "name": "lab-davide",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FazioD/lab-05-tcp-chat-server.git"
+  },
+  "author": "Davide Fazio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FazioD/lab-05-tcp-chat-server/issues"
+  },
+  "homepage": "https://github.com/FazioD/lab-05-tcp-chat-server#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0"
+  }
+}
