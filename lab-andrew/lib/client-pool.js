@@ -30,7 +30,7 @@ function registerClientListeners(socket, clientPool) {
   });
 }
 
-const ClientPool = module.exports = function() {
+const ClientPool = module.exports = function() {      
   EventEmitter.call(this);
   this.pool = {};
 
