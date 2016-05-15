@@ -11,10 +11,9 @@ function registerClient(socket, ClientPool){
   for (var i = 0; i < numbersMan.length; i += 1) {
     numbersWords.push(+numbersMan.charAt(i));
   };
-  socket.chat.nickName = 'client ' + numbersWords.reduce(function(a,b){
+  socket.chat.nickName = 'Guest_' + numbersWords.reduce(function(a,b){
     return a + b;
   });
-  console.log('you are', socket.chat.nickName);
 };
 
 function registerClientListener(socket, clientPool){
@@ -35,14 +34,14 @@ const ClientPool = module.exports = function ClientPool(){
   this.pool = {};
 
   this.on('register', (socket) => {
-    socket.write('Welcome to Last-Chat! \n');
     registerClient(socket, this);
     registerClientListener(socket, this);
+    socket.write('Welcome to Last-Chat! ' + 'You are ' + socket.chat.nickName + '\n');
   });
 
   this.on('broadcast', (data, socket) => {
     Object.keys(this.pool).forEach((clientId) => {
-      this.pool[clientId].write(socket.chat.nickName + ':' + data.toString());
+      this.pool[clientId].write(socket.chat.nickName + ': ' + data.toString());
     });
   })
 };
