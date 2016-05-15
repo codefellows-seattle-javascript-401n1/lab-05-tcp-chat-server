@@ -10,7 +10,7 @@ function registerClient(socket, ClientPool){
 }
 function registerClientListeners(socket, clientPool){
   socket.on('data', function(data){
-    console.log(socket.wack.id + ': ' + data.toString() + ' Punk');
+    console.log(socket.wack.id + ': ' + data.toString());
     clientPool.emit('broadcast', data);
   });
 
