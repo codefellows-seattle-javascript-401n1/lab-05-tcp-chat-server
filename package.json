@@ -4,7 +4,7 @@
   "description": "wack-chat initial setup",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "eslint",
     "start": "node server.js"
   },
   "repository": {
@@ -19,7 +19,7 @@
   "homepage": "https://github.com/andrewpeterwatson/lab-05-tcp-chat-server#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^2.10.1",
+    "gulp-eslint": "^2.0.0",
     "gulp-mocha": "^2.2.0"
   }
 }
