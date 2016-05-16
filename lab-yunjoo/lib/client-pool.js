@@ -34,4 +34,5 @@ const ClientPool = module.exports = function(){
     registerClientListeners(socket, this);
   });
 };
+
 ClientPool.prototype = Object.create(EventEmitter.prototype);
