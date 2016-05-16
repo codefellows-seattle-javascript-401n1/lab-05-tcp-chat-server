@@ -7,6 +7,7 @@ function registerClient(socket, ClientPool){
   socket.wack = {};
   socket.wack.id = userNames[Math.floor(Math.random() * 4)] + '_' + Date.now();
   ClientPool.pool[socket.wack.id] = socket;
+  console.log(socket.wack.id + ' has connected');
 }
 function registerClientListeners(socket, clientPool){
   socket.on('data', function(data){
@@ -15,7 +16,7 @@ function registerClientListeners(socket, clientPool){
   });
 
   socket.on('close', () => {
-    console.log('A client has disconnected');
+    console.log(socket.wack.id +' has disconnected');
     delete clientPool.pool[socket.wack.id];
 
   });
