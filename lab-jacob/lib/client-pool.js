@@ -3,13 +3,13 @@
 const EventEmitter = require('events').EventEmitter;
 const uuid = require('node-uuid');
 
-function registerClient(socket, clientPool){
+function registerClient(socket, clientPool){ //creates client pool and ids/nicknames
   socket.wack = {};
   socket.wack.id = 'User_' + uuid.v4();
   clientPool.pool[socket.wack.id] = socket;
 }
 
-function registerClientListeners(socket, clientPool){
+function registerClientListeners(socket, clientPool){ //register all the listeners for client events
   socket.on('data', function(data){
     clientPool.emit('broadcast', data, socket);
   });
