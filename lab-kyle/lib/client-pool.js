@@ -17,7 +17,7 @@ function registerClientListeners(socket){
     console.log('a client has disconeccted');
     delete socket.wack[socket.wack.id];
   });
-  
+
  // error event is triggered when the socket(client) has an error
   socket.on('error', function(err){
     console.error('CLIENT ERROR:', err.message);
@@ -25,7 +25,7 @@ function registerClientListeners(socket){
 }
 
 function broadcast(socket, clientPool) { // if data has backslash check commands
-  socket.on('data', function(data){
+  socket.on('data', function(data) {
     console.log(socket.wack.id + ': ' + data);
     Object.keys(clientPool.pool).forEach(function(clientId){
       clientPool.pool[clientId].write(socket.wack.id + ': ' + data.toString());
