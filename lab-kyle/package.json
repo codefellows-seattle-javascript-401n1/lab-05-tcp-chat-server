@@ -1,16 +1,16 @@
 {
-  "name": "y",
+  "name": "tcp chat server",
   "version": "1.0.0",
   "description": "![cf](https://i.imgur.com/7v5ASc8.png) lab-05-tcp-chat-server ======",
   "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "test":
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kyleschnirring/lab-05-tcp-chat-server.git"
   },
-  "author": "",
+  "author": "kyleschnirring@icloud.com",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kyleschnirring/lab-05-tcp-chat-server/issues"
