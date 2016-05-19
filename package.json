@@ -1,0 +1,23 @@
+{
+  "name": "lab-05-tcp-chat-server",
+  "version": "1.0.0",
+  "description": "![cf](https://i.imgur.com/7v5ASc8.png) lab-05-tcp-chat-server ======",
+  "main": "index.js",
+  "dependencies": {
+    "node-uuid": "^1.4.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sjb3/lab-05-tcp-chat-server.git"
+  },
+  "author": "justin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sjb3/lab-05-tcp-chat-server/issues"
+  },
+  "homepage": "https://github.com/sjb3/lab-05-tcp-chat-server#readme"
+}
