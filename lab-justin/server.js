@@ -13,8 +13,7 @@ server.on('connection', function(socket){
 server.on('error', function(err){
   console.error('CLIENT ERROR', err.message);
 });
-//err -> log it on stderr
-//-> listen to the connection
+
 server.listen(port, function(){
   console.log('Server is Running!', port);
 
