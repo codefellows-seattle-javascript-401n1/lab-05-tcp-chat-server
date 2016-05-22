@@ -5,27 +5,27 @@ const uuid = require('node-uuid');
 
 function registerClient(socket, chatPool){
   socket.chat = {};
-  socket.chat.nick= 'guest_'+Math.floor(Math.rando()*(100-1))+1;
+  socket.chat.nick= 'guest_'+Math.floor(Math.random()*(100-1))+1;
   socket.chat.id = 'user_'+uuid.v4();
   chatPool.pool[socket.chat.id] = socket;
 
 }
 
 function registerClientListeners(socket, chatPool){
-  socket.on('data', function(data) => {
+  socket.on('data', function(data){
     if((data.toString()).indexOf('\\nick')>-1){
       var firstNick = socket.chat.nick;
-      chatpool.emit('newnick', data, socket);
+      chatPool.emit('newnick', data, socket);
       var changeName = firstNick + ' changed nickname to '+socket.chat.nick;
-      chatpool.emit('broadcast', changedName, socket);
+      chatPool.emit('broadcast', changeName, socket);
       return ;
     }
-    chatpool.emit('broadcast',data, socket);
+    chatPool.emit('broadcast',data, socket);
     // console.log(data.toString());
 
   });
 
-  socket.on('close', ()=> {
+  socket.on('close', function(chatpool){
     console.log(socket.chat.id+' has disconnected');
     delete chatpool.pool[socket.chat.id];
   });
@@ -45,12 +45,12 @@ const ClientPool = module.exports = function(){
   });
   this.on('broadcast', (data, socket) => {
     Object.keys(this.pool).forEach((clientId)=>{
-    chatPool.pool[clientId].write(socket.chat.nick +': ' + data.toString());
+      this.pool[clientId].write(socket.chat.nick +': ' + data.toString());
+    });
   });
-});
   this.on('newnick', (data,socket)=>{
-  var string = data.toString();
-  socket.chat.nick = (string.slice(6)).replace(/\r?\n|\r/,'');
+    var string = data.toString();
+    socket.chat.nick = (string.slice(6)).replace(/\r?\n|\r/,'');
   });
 };
 
