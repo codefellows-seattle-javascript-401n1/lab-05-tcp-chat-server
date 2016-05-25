@@ -4,7 +4,7 @@
   "description": "Local Chat App",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "gulp"
   },
   "repository": {
     "type": "git",
@@ -17,10 +17,7 @@
   },
   "homepage": "https://github.com/muddybeard210/lab-05-tcp-chat-server#readme",
   "devDependencies": {
-    "chai": "^3.5.0",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^2.0.0",
-    "gulp-mocha": "^2.2.0",
-    "mocha": "^2.4.5"
+    "gulp-eslint": "^2.0.0"
   }
 }

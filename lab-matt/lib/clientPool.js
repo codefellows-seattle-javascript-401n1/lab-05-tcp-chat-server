@@ -14,14 +14,11 @@ function registerClientListeners(socket, clientPool){
     console.log(socket.wack.id + ': ' + data.toString());
     clientPool.emit('broadcast', data);
   });
-
   socket.on('close', () => {
     console.log(socket.wack.id +' has disconnected');
     delete clientPool.pool[socket.wack.id];
-
   });
 }
-
 const ClientPool = module.exports = function(){
   EE.call(this);
   this.pool = {};
@@ -31,10 +28,9 @@ const ClientPool = module.exports = function(){
     registerClient(socket, this);
     registerClientListeners(socket, this);
   });
-
   this.on('broadcast', (data) => {
     Object.keys(this.pool).forEach((clientId)=> {
-      this.pool[clientId].write(data.toString());
+      this.pool[clientId].write(this.pool[clientId].wack.id + ':' + data.toString());
     });
   });
 };
