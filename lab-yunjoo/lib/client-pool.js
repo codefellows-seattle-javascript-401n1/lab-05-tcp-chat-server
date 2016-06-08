@@ -3,6 +3,8 @@
 const EventEmitter = require('events').EventEmitter;
 const uuid = require('node-uuid');
 
+
+//create client data
 function registerClient(socket, chatPool){
   socket.chat = {};
   socket.chat.nick= 'guest_'+Math.floor(Math.random()*(100-1))+1;
@@ -10,7 +12,7 @@ function registerClient(socket, chatPool){
   chatPool.pool[socket.chat.id] = socket;
 
 }
-
+//broadcast data,chat,leaving message to all other client
 function registerClientListeners(socket, chatPool){
   socket.on('data', function(data){
     if((data.toString()).indexOf('\\nick')>-1){
@@ -21,7 +23,7 @@ function registerClientListeners(socket, chatPool){
       return ;
     }
     chatPool.emit('broadcast',data, socket);
-    // console.log(data.toString());
+
 
   });
 
@@ -29,10 +31,12 @@ function registerClientListeners(socket, chatPool){
     console.log(socket.chat.id+' has disconnected');
     delete chatpool.pool[socket.chat.id];
   });
+  //send error message
   socket.on('error', function(err){
     console.error('CLIENT ERROR: ', err.message);
   });
 }
+
 
 const ClientPool = module.exports = function(){
   EventEmitter.call(this);
@@ -40,7 +44,6 @@ const ClientPool = module.exports = function(){
   this.on('register', (socket)=>{
     socket.write('Welcome to the chat room!\n');
     registerClient(socket, this);
-    // socket.write(this.pool[socket.chat.id]+'\n');
     registerClientListeners(socket, this);
   });
   this.on('broadcast', (data, socket) => {
