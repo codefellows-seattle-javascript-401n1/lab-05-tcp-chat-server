@@ -11,6 +11,7 @@ net.connection event returns socket with lots of data including close, err, data
 */
 server.on('connection', function(socket){
   wackPool.emit('register', socket);
+  wackPool.emit('broadcast', socket);
 });
 
 server.on('error', function(err){

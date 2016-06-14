@@ -1,21 +1,24 @@
 'use strict';
 
 const EventEmitter = require('events').EventEmitter;
+const uuid = require('node-uuid');
 
 function registerClient(socket, clientPool){
+  var ranNum = Math.floor(Math.random() * 1000 + 1);
   socket.wack = {};
   socket.wack.id = 'user_' + uuid.v4();
-  socket.wack.nickname = 'something';
+  socket.wack.nickname = 'guest-' + ranNum;
   clientPool.pool[socket.wack.id] = socket;
 }
 
 function registerClientListeners(socket, clientPool){
   socket.on('data', function(data){
-    console.log(data.toString());
+    console.log(socket.wack.nickname, data.toString());
   });
 
   socket.on('broadcast', function(data){
-    return data.toString;
+    return data.toString();
+    //send response to each member of the pool
   });
 
   socket.on('close', function(socket, clientPool){
@@ -38,10 +41,10 @@ const ClientPool = module.exports = function(){
     registerClientListeners(socket, this);//this is wackPool
   });
   this.on('broadcast', function(socket, message){
-    Object.keys(clientPool.pool).forEach(function(clientId){
-      clientPool.pool[clientId].write(data.toString());
+    Object.keys(this.pool).forEach(function(clientId){
+      clientPool.pool[clientId].write(message.toString());
     });
   });
 };
 
-ClientPool.prototype = Object.create(EventEmitter.prototype);//inherting all the eventEmmitter METHODS
+ClientPool.prototype = Object.create(EventEmitter.prototype);//inherting all the eventEmmitter METHODS like 'on'
