@@ -1,0 +1,29 @@
+{
+  "name": "lab-doug",
+  "version": "1.0.0",
+  "description": "lab-05 tcp chat server",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gsmatth/lab-05-tcp-chat-server.git"
+  },
+  "author": "gsmatth@icloud.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gsmatth/lab-05-tcp-chat-server/issues"
+  },
+  "homepage": "https://github.com/gsmatth/lab-05-tcp-chat-server#readme",
+  "devDependencies": {
+
+  },
+  "dependencies": {
+    "node-uuid": "^1.4.7"
+  }
+}
