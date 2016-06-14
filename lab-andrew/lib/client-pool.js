@@ -1,13 +1,13 @@
 'use strict';
 
 const EventEmitter = require('events').EventEmitter;
-const uuid = require('uuid');
+const uuid = require('node-uuid');
 
 
 
 function registerClient(socket, clientPool) {
   socket.wack = {};
-  socket.wack.id = uuid.v4;
+  socket.wack.id = 'User: ' + uuid.v4();
   clientPool.pool[socket.wack.id] = socket;
 }
 
@@ -37,6 +37,8 @@ const ClientPool = module.exports = function() {
     socket.write('welcome trolls!\n');
     registerClient(socket, this);
     registerClientListeners(socket, this);
+    socket.write(socket.wack.id + ' has logged on\n');
+    console.log(socket.wack.id + ' has connected');
   });
 
   this.on('broadcast', (data) => {

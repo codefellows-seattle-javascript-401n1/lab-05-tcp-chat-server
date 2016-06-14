@@ -18,6 +18,13 @@
   },
   "homepage": "https://github.com/andrewpeterwatson/lab-05-tcp-chat-server#readme",
   "devDependencies": {
-    "gulp-eslint": "^2.0.0"
+    "chai": "^3.5.0",
+    "eslint": "^2.12.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "uuid": "^2.0.2"
   }
 }
