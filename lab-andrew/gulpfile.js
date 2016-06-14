@@ -1,0 +1,14 @@
+'use strict';
+
+const gulp = require('gulp');
+const eslint = require('gulp-eslint');
+
+gulp.task('lint', function() {
+  return gulp.src(['**/*.js', '!node_modules/**'])
+  .pipe(eslint()).pipe(eslint.format());
+});
+gulp.task('default', ['lint'], function() {
+});
+gulp.task('watcher', function() {
+  gulp.watch(['**/*.js','!node_modules**'], ['lint']);
+});
