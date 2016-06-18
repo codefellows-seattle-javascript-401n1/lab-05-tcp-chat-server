@@ -1,0 +1,23 @@
+{
+  "name": "lab-05-tcp-chat-server",
+  "version": "1.0.0",
+  "description": "lab 05 tcp chat",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronoh2001/lab-05-tcp-chat-server.git"
+  },
+  "author": "ron oh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ronoh2001/lab-05-tcp-chat-server/issues"
+  },
+  "homepage": "https://github.com/ronoh2001/lab-05-tcp-chat-server#readme",
+  "dependencies": {
+    "node-uuid": "^1.4.7"
+  }
+}
