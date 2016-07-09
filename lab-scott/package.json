@@ -1,0 +1,28 @@
+{
+  "name": "class-05-tcp",
+  "version": "1.0.0",
+  "description": "Class05 TCP Chat Server",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sjschmidt44/lab-05-tcp-chat-server.git"
+  },
+  "keywords": [
+    "tcp",
+    "chat",
+    "server"
+  ],
+  "author": "Scott Schmidt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sjschmidt44/lab-05-tcp-chat-server/issues"
+  },
+  "homepage": "https://github.com/sjschmidt44/lab-05-tcp-chat-server#readme"
+}
