@@ -33,8 +33,8 @@ function createClientListener(socket, clientPool) {
   socket.on('data', (data) => { clientPool.emit('broadcast', socket.wack.nick + ': ' + data); });
   socket.on('error', (err) => { console.error('Client Error:', err.message); });
   socket.on('close', () => {
-    console.log('Socket closed');
     clientPool.pool[socket.wack.id].unref();
     delete clientPool.pool[socket.wack.id];
+    console.log('Socket closed');
   });
 }

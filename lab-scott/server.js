@@ -4,10 +4,7 @@ const net = require('net');
 const port = process.argv[2] || 3000;
 const ClientPool = require('./lib/client-pool');
 const wackPool = new ClientPool();
-const killServer = require('./lib/killServer');
 const server = module.exports = net.createServer();
-
-killServer(server);
 
 server.on('connection', (socket) => { wackPool.emit('register', socket); });
 server.on('close', () => { server.kill(); });
