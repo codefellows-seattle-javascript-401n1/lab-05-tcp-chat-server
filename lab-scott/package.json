@@ -27,6 +27,7 @@
   "homepage": "https://github.com/sjschmidt44/lab-05-tcp-chat-server#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-mocha": "^2.2.0",

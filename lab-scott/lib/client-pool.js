@@ -9,8 +9,8 @@ const ClientPool = module.exports = function() {
 
   this.on('register', (socket) => {
     createClient(socket, this);
-    socket.write('Hello ' + socket.wack.id + '\n');
     createClientListener(socket, this);
+    socket.write('Hello ' + socket.wack.id + '\n');
   });
 
   this.on('broadcast', (data) => {
@@ -31,6 +31,10 @@ function createClient(socket, clientPool) {
 
 function createClientListener(socket, clientPool) {
   socket.on('data', (data) => { clientPool.emit('broadcast', socket.wack.nick + ': ' + data); });
-  socket.on('close', () => { delete clientPool.pool[socket.wack.id]; });
   socket.on('error', (err) => { console.error('Client Error:', err.message); });
+  socket.on('close', () => {
+    console.log('Socket closed');
+    clientPool.pool[socket.wack.id].unref();
+    delete clientPool.pool[socket.wack.id];
+  });
 }
