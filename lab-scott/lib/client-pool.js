@@ -39,7 +39,7 @@ function createClientListener(socket, clientPool) {
   socket.on('close', () => {
     clientPool.pool[socket.wack.id].end();
     delete clientPool.pool[socket.wack.id];
-    console.log('Socket closed');
+    // console.log('Socket closed');
   });
 }
 

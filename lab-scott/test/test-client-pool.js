@@ -3,17 +3,15 @@
 const server = require('../server');
 const chai = require('chai');
 const net = require('net');
-// const ClientPool = require('../lib/client-pool');
-// const wackPool = new ClientPool();
 
-describe('client-pool module', () => {
-  describe('Test tcp server', function () {
+describe('Server module', () => {
+  describe('Start tcp server', function () {
     before((done) => {
       server.listen(3000);
       done();
     });
 
-    describe('Connect to TCP server', function() {
+    describe('Create single client connection', function() {
       let client;
       before((done) => {
         client = net.createConnection({ port:3000 });
@@ -22,7 +20,6 @@ describe('client-pool module', () => {
 
       it('Should include Hello upon connection', function (done) {
         client.once('data', function(data) {
-          console.log(data.toString());
           chai.expect(data.toString()).to.include('Hello');
         });
 
@@ -33,7 +30,6 @@ describe('client-pool module', () => {
         client.write('WATMAN!');
 
         client.on('data', function(data) {
-          console.log('data', data.toString());
           chai.expect(data.toString()).to.include('WATMAN!');
         });
 
@@ -45,6 +41,46 @@ describe('client-pool module', () => {
         done();
       });
     });
+
+    describe('Create multiple client connections', function() {
+      let clientOne, clientTwo;
+      before((done) => {
+        clientOne = net.createConnection( {port: 3000} );
+        clientTwo = net.createConnection( {port: 3000} );
+        done();
+      });
+
+      it('should create two client connections, and say Hello', function(done) {
+        chai.assert.isObject(clientOne, 'ClientOne is an active Socket');
+        chai.assert.isObject(clientTwo, 'ClientTwo is an active Socket');
+
+        clientOne.once('data', (data) => {
+          chai.expect(data.toString()).to.include('Hello');
+        });
+
+        clientTwo.once('data', (data) => {
+          chai.expect(data.toString()).to.include('Hello');
+        });
+        done();
+      });
+
+      it('should return clientOne.write to clientTwo', function(done) {
+        clientOne.write('Hey clientTwo!');
+
+        clientTwo.once('data', (data) => {
+          chai.expect(data.toString()).to.include('Hey clientTwo!');
+        });
+
+        done();
+      });
+
+      after((done) => {
+        clientOne.end();
+        clientTwo.end();
+        done();
+      });
+    });
+
     after((done) => {
       server.close();
       done();
