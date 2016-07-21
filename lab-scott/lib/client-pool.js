@@ -10,13 +10,17 @@ const ClientPool = module.exports = function() {
   this.on('register', (socket) => {
     createClient(socket, this);
     createClientListener(socket, this);
-    socket.write('Hello ' + socket.wack.id + '\n');
+    socket.write('Hello ' + socket.wack.nick + '\n');
   });
 
   this.on('broadcast', (data) => {
     Object.keys(this.pool).forEach((id) => {
       this.pool[id].write(data.toString());
     });
+  });
+
+  this.on('close', () => {
+    removeClients(this);
   });
 };
 
@@ -30,11 +34,26 @@ function createClient(socket, clientPool) {
 }
 
 function createClientListener(socket, clientPool) {
-  socket.on('data', (data) => { clientPool.emit('broadcast', socket.wack.nick + ': ' + data); });
   socket.on('error', (err) => { console.error('Client Error:', err.message); });
+  socket.on('data', (data) => { clientPool.emit('broadcast', socket.wack.nick + ': ' + data); });
   socket.on('close', () => {
-    clientPool.pool[socket.wack.id].unref();
+    clientPool.pool[socket.wack.id].end();
     delete clientPool.pool[socket.wack.id];
     console.log('Socket closed');
   });
 }
+
+function removeClients(clientPool) {
+  // console.log('WACK', clientPool);
+  // if (Object.keys(clientPool.pool).length) {
+  //   Object.keys(clientPool.pool).forEach((socket) => {
+  //     delete clientPool.pool[socket.wack.id];
+  //     clientPool.pool[socket.wack.id].end();
+  //   });
+  // }
+}
+
+// On 'data': check incoming data for a wack '/'.
+  // If present: separate wack and command, then check if command is valid (throw err if not)
+
+  // If not present: pass onto clientPool 'broadcast'

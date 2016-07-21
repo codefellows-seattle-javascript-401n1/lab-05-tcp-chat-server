@@ -7,6 +7,6 @@ const wackPool = new ClientPool();
 const server = module.exports = net.createServer();
 
 server.on('connection', (socket) => { wackPool.emit('register', socket); });
-server.on('close', () => { server.kill(); });
+server.on('close', () => { wackPool.emit('close'); });
 server.on('error', (err) => { console.error('Server Error', err.message); });
 server.listen(port, () => { console.log('Server running on port:', port); });

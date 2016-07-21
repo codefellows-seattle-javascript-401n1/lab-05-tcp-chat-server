@@ -3,43 +3,51 @@
 const server = require('../server');
 const chai = require('chai');
 const net = require('net');
-const ClientPool = require('../lib/client-pool');
-const wackPool = new ClientPool();
+// const ClientPool = require('../lib/client-pool');
+// const wackPool = new ClientPool();
 
 describe('client-pool module', () => {
-  describe('createClient', () => {
-    const testSocket = {};
-    testSocket.on = () => { console.log('test fake on'); };
-    testSocket.write = () => { console.log('Flibbity Jibbit was here!'); };
-
-    it('should register new client to socket', (done) => {
-      wackPool.emit('register', testSocket);
-      chai.expect(wackPool).to.have.any.keys('pool');
-      chai.expect(Object.keys(wackPool.pool)).to.have.length(1);
-      done();
-    });
-  });
-
   describe('Test tcp server', function () {
-    before(function() {
-      server.listen(3000, function() { console.log('Listening on 3000'); });
-    });
-
-    it('Should reply with Hello client', function (done) {
-      var client = net.connect({ port:3000 }, function() {
-        client.write('WATMAN!');
-      });
-
-      client.on('data', function(data) {
-        console.log('data', data.toString());
-        client.end();
-      });
-
+    before((done) => {
+      server.listen(3000);
       done();
     });
 
-    after(function() {
+    describe('Connect to TCP server', function() {
+      let client;
+      before((done) => {
+        client = net.createConnection({ port:3000 });
+        done();
+      });
+
+      it('Should include Hello upon connection', function (done) {
+        client.once('data', function(data) {
+          console.log(data.toString());
+          chai.expect(data.toString()).to.include('Hello');
+        });
+
+        done();
+      });
+
+      it('Should include Watman in the response', (done) => {
+        client.write('WATMAN!');
+
+        client.on('data', function(data) {
+          console.log('data', data.toString());
+          chai.expect(data.toString()).to.include('WATMAN!');
+        });
+
+        after((done) => {
+          client.end();
+          done();
+        });
+
+        done();
+      });
+    });
+    after((done) => {
       server.close();
+      done();
     });
   });
 });
