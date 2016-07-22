@@ -40,7 +40,7 @@ describe('Server module', () => {
         client.write('/nick Scott');
 
         client.on('data', (data) => {
-          chai.expect(data.toString()).to.equal('nick changed to Scott')
+          chai.expect(data.toString()).to.equal('nick changed to Scott');
         });
 
         done();
