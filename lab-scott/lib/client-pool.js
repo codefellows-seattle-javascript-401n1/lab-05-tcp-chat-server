@@ -14,13 +14,7 @@ const ClientPool = module.exports = function() {
   });
 
   this.on('broadcast', (data) => {
-    Object.keys(this.pool).forEach((id) => {
-      this.pool[id].write(data.toString());
-    });
-  });
-
-  this.on('close', () => {
-    removeClients(this);
+    parseCommand(data, this);
   });
 };
 
@@ -39,21 +33,24 @@ function createClientListener(socket, clientPool) {
   socket.on('close', () => {
     clientPool.pool[socket.wack.id].end();
     delete clientPool.pool[socket.wack.id];
-    // console.log('Socket closed');
   });
 }
 
-function removeClients(clientPool) {
-  // console.log('WACK', clientPool);
-  // if (Object.keys(clientPool.pool).length) {
-  //   Object.keys(clientPool.pool).forEach((socket) => {
-  //     delete clientPool.pool[socket.wack.id];
-  //     clientPool.pool[socket.wack.id].end();
-  //   });
-  // }
+function parseCommand(data, clientPool) {
+  let dataString = data.toString().split(' ');
+  if (dataString[1].match(/^\/nick/ig) && dataString[2]) {
+    let nick = dataString[2].split('\n');
+    changeNick(data, clientPool, nick[0]);
+  } else {
+    Object.keys(clientPool.pool).forEach((id) => {
+      clientPool.pool[id].write(data.toString());
+    });
+  }
 }
 
-// On 'data': check incoming data for a wack '/'.
-  // If present: separate wack and command, then check if command is valid (throw err if not)
-
-  // If not present: pass onto clientPool 'broadcast'
+function changeNick(data, clientPool, newNick) {
+  Object.keys(clientPool.pool).forEach((id) => {
+    clientPool.pool[id].wack.nick = newNick;
+    clientPool.pool[id].write('nick changed to ' + newNick);
+  });
+}

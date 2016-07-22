@@ -33,13 +33,24 @@ describe('Server module', () => {
           chai.expect(data.toString()).to.include('WATMAN!');
         });
 
-        after((done) => {
-          client.end();
-          done();
+        done();
+      });
+
+      it('should chage the nickname on /nick command', (done) => {
+        client.write('/nick Scott');
+
+        client.on('data', (data) => {
+          chai.expect(data.toString()).to.equal('nick changed to Scott')
         });
 
         done();
       });
+
+      after((done) => {
+        client.end();
+        done();
+      });
+
     });
 
     describe('Create multiple client connections', function() {
