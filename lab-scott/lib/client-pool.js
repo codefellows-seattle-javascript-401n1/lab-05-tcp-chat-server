@@ -13,9 +13,7 @@ const ClientPool = module.exports = function() {
     socket.write('Hello ' + socket.wack.nick + '\n');
   });
 
-  this.on('broadcast', (data, socket) => {
-    parseCommand(data, socket, this);
-  });
+  this.on('broadcast', (data, socket) => parseCommand(data, socket, this));
 };
 
 ClientPool.prototype = Object.create(EventEmitter.prototype);
@@ -28,8 +26,8 @@ function createClient(socket, clientPool) {
 }
 
 function createClientListener(socket, clientPool) {
-  socket.on('error', (err) => { console.error('Client Error:', err.message); });
-  socket.on('data', (data) => { clientPool.emit('broadcast', socket.wack.nick + ': ' + data, socket); });
+  socket.on('error', (err) => console.error('Client Error:', err.message));
+  socket.on('data', (data) => clientPool.emit('broadcast', socket.wack.nick + ': ' + data, socket));
   socket.on('close', () => {
     clientPool.pool[socket.wack.id].end();
     delete clientPool.pool[socket.wack.id];
