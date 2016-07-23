@@ -7,7 +7,7 @@ const ClientPool = module.exports = function() {
   EventEmitter.call(this);
   this.pool = {};
 
-  this.on('register', (socket) => {
+  this.on('register', socket => {
     createClient(socket, this);
     createClientListener(socket, this);
     socket.write('Hello ' + socket.wack.nick + '\n');
@@ -26,8 +26,8 @@ function createClient(socket, clientPool) {
 }
 
 function createClientListener(socket, clientPool) {
-  socket.on('error', (err) => console.error('Client Error:', err.message));
-  socket.on('data', (data) => clientPool.emit('broadcast', socket.wack.nick + ': ' + data, socket));
+  socket.on('error', err => console.error('Client Error:', err.message));
+  socket.on('data', data => clientPool.emit('broadcast', socket.wack.nick + ': ' + data, socket));
   socket.on('close', () => {
     clientPool.pool[socket.wack.id].end();
     delete clientPool.pool[socket.wack.id];
@@ -45,9 +45,7 @@ function parseCommand(data, socket, clientPool) {
   } else if (dataString[1].match(/^\/users/ig)) {
     listUsers(clientPool);
   } else {
-    Object.keys(clientPool.pool).forEach((id) => {
-      clientPool.pool[id].write(data.toString());
-    });
+    Object.keys(clientPool.pool).forEach(id => clientPool.pool[id].write(data.toString()));
   }
 }
 
@@ -57,7 +55,7 @@ function changeNick(clientPool, socket, newNick) {
 }
 
 function directMsg(data, clientPool, dmNick) {
-  Object.keys(clientPool.pool).forEach((id) => {
+  Object.keys(clientPool.pool).forEach(id => {
     if (clientPool.pool[id].wack.nick === dmNick.toString()) {
       clientPool.pool[id].write(data.toString());
     }
@@ -66,11 +64,6 @@ function directMsg(data, clientPool, dmNick) {
 
 function listUsers(clientPool) {
   let users = [];
-  Object.keys(clientPool.pool).forEach((id) => {
-    users.push(clientPool.pool[id].wack.nick + ' ');
-  });
-
-  Object.keys(clientPool.pool).forEach((id) => {
-    clientPool.pool[id].write('Users: ' + users.toString() + '\n');
-  });
+  Object.keys(clientPool.pool).forEach(id => users.push(clientPool.pool[id].wack.nick + ' '));
+  Object.keys(clientPool.pool).forEach(id => clientPool.pool[id].write('Users: ' + users.toString() + '\n'));
 }
